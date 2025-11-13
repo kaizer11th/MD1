@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CropSenseAI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#f9f9e9] font-sans">
+
+  <!-- Header -->
+  <header class="p-6 flex items-center justify-center gap-2">
+    <span class="text-green-700 text-2xl font-bold">🌿 CropSenseAI</span>
+  </header>
+
+  <!-- Tabs -->
+  <div class="flex justify-center mb-6 border-b border-gray-300">
+    <button class="tab-btn px-6 py-2 font-medium text-gray-700 border-b-4 border-green-600" onclick="showTab('disease', this)">Disease Diagnosis</button>
+    <button class="tab-btn px-6 py-2 font-medium text-gray-700 border-b-4 border-transparent hover:border-green-600" onclick="showTab('yield', this)">Yield Prediction</button>
+    <button class="tab-btn px-6 py-2 font-medium text-gray-700 border-b-4 border-transparent hover:border-green-600" onclick="showTab('farm', this)">Farm Report</button>
+  </div>
+
+  <!-- Tabs Content -->
+  <div class="max-w-3xl mx-auto bg-white rounded-lg shadow p-6">
+
+    <!-- Disease Diagnosis -->
+    <div id="disease" class="tab-content">
+      <h2 class="text-2xl font-bold mb-4">Detect Crop Disease</h2>
+      <p class="mb-4 text-gray-600">Upload a photo of a crop leaf to get an instant AI diagnosis and eco-friendly remedy suggestion.</p>
+      <div class="border-2 border-dashed border-gray-300 p-8 rounded-lg text-center mb-4">
+        <input type="file" class="hidden" id="fileUpload">
+        <label for="fileUpload" class="cursor-pointer text-gray-600">Click to upload or drag and drop</label>
+        <p class="text-sm text-gray-400">PNG, JPG, or WEBP (max 4MB)</p>
+      </div>
+      <button class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 w-full">Get Diagnosis</button>
+    </div>
+
+    <!-- Yield Prediction -->
+    <div id="yield" class="tab-content hidden">
+      <h2 class="text-2xl font-bold mb-4">Predict Crop Yield</h2>
+      <p class="mb-4 text-gray-600">Enter climate and soil data to predict crop stress and potential yield.</p>
+      <input type="text" placeholder="Crop (e.g., Maize, Wheat)" class="border rounded p-2 w-full mb-3">
+      <input type="text" placeholder="Location" class="border rounded p-2 w-full mb-3">
+      <input type="text" placeholder="Soil Type" class="border rounded p-2 w-full mb-3">
+      <textarea placeholder="Weather Forecast..." class="border rounded p-2 w-full mb-3"></textarea>
+      <button class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 w-full">Predict Yield</button>
+    </div>
+
+    <!-- Farm Report -->
+    <div id="farm" class="tab-content hidden">
+      <h2 class="text-2xl font-bold mb-4">Generate Farm Report</h2>
+      <p class="mb-4 text-gray-600">Get a comprehensive AI-driven report for long-term planning.</p>
+      <textarea placeholder="Farm Information..." class="border rounded p-2 w-full mb-3"></textarea>
+      <textarea placeholder="Seasonal Data..." class="border rounded p-2 w-full mb-3"></textarea>
+      <input type="text" placeholder="Location" class="border rounded p-2 w-full mb-3">
+      <select class="border rounded p-2 w-full mb-3">
+        <option>English</option>
+        <option>Hindi</option>
+        <option>Bengali</option>
+      </select>
+      <button class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 w-full">Generate Report</button>
+    </div>
+  </div>
+
+  <!-- JS for Tabs -->
+  <script>
+    function showTab(tabId, btnElement) {
+      
+      document.querySelectorAll(".tab-content").forEach(tab => tab.classList.add("hidden"));
+      document.getElementById(tabId).classList.remove("hidden");
+
+      
+      document.querySelectorAll(".tab-btn").forEach(btn => {
+        btn.classList.remove("border-green-600");
+        btn.classList.add("border-transparent");
+      });
+
+      
+      btnElement.classList.remove("border-transparent");
+      btnElement.classList.add("border-green-600");
+    }
+
+    
+    window.onload = () => {
+      document.querySelector(".tab-btn").click();
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,3 @@
+n,p,k,temperature,humidity,ph,rainfall,avg_price,latitude,longitude
+90,42,43,25.5,80.2,6.5,200,5500,15.8,78.1
+100,50,60,30,75,7.1,150,4800,17.2,81.3
