@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CropSenseAI - Smart Agriculture Platform</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-green-50 to-blue-50 font-sans min-h-screen">
+
+  <!-- Header -->
+  <header class="bg-white shadow-md p-6">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <span class="text-4xl">🌾</span>
+        <h1 class="text-3xl font-bold text-green-700">CropSenseAI</h1>
+      </div>
+      <p class="text-gray-600">AI-Powered Agriculture Intelligence</p>
+    </div>
+  </header>
+
+  <!-- Tabs Navigation -->
+  <div class="flex justify-center my-8 border-b border-gray-300 max-w-7xl mx-auto">
+    <button class="tab-btn px-8 py-3 font-medium text-gray-700 border-b-4 border-green-600 transition-all" onclick="showTab('disease', this)">
+      🔬 Disease Diagnosis
+    </button>
+    <button class="tab-btn px-8 py-3 font-medium text-gray-700 border-b-4 border-transparent hover:border-green-400 transition-all" onclick="showTab('yield', this)">
+      📈 Yield Prediction
+    </button>
+    <button class="tab-btn px-8 py-3 font-medium text-gray-700 border-b-4 border-transparent hover:border-green-400 transition-all" onclick="showTab('recommendation', this)">
+      🌱 Crop Recommendation
+    </button>
+    <button class="tab-btn px-8 py-3 font-medium text-gray-700 border-b-4 border-transparent hover:border-green-400 transition-all" onclick="showTab('farm', this)">
+      📊 Farm Report
+    </button>
+  </div>
+
+  <!-- Tabs Content -->
+  <div class="max-w-4xl mx-auto px-4">
+
+    <!-- Disease Diagnosis Tab -->
+    <div id="disease" class="tab-content bg-white rounded-lg shadow-lg p-8">
+      <h2 class="text-3xl font-bold mb-4 text-gray-800">Detect Crop Disease</h2>
+      <p class="mb-6 text-gray-600">Upload a photo of a crop leaf to get an instant AI diagnosis and eco-friendly remedy suggestion.</p>
+      
+      <form id="diseaseForm" enctype="multipart/form-data" class="space-y-4">
+        <div class="border-2 border-dashed border-gray-300 p-8 rounded-lg text-center hover:border-green-500 transition-colors">
+          <input type="file" class="hidden" id="fileUpload" name="file" accept="image/*">
+          <label for="fileUpload" class="cursor-pointer text-gray-600 block">
+            <span class="text-5xl block mb-2">📷</span>
+            <span class="text-lg">Click to upload or drag and drop</span>
+            <p class="text-sm text-gray-400 mt-2">PNG, JPG, or WEBP (max 4MB)</p>
+          </label>
+        </div>
+        
+        <div id="imagePreview" class="hidden">
+          <img id="previewImg" class="max-w-full rounded-lg mx-auto" />
+        </div>
+        
+        <button type="submit" class="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 w-full font-semibold transition-colors">
+          🔍 Get Diagnosis
+        </button>
+      </form>
+      
+      <div id="diseaseResult" class="mt-6 hidden"></div>
+    </div>
+
+    <!-- Yield Prediction Tab -->
+    <div id="yield" class="tab-content hidden bg-white rounded-lg shadow-lg p-8">
+      <h2 class="text-3xl font-bold mb-4 text-gray-800">Predict Crop Yield</h2>
+      <p class="mb-6 text-gray-600">Enter climate and soil data to predict crop stress and potential yield.</p>
+      
+      <form id="yieldForm" class="space-y-4">
+        <div>
+          <label class="block text-gray-700 font-medium mb-2">Crop</label>
+          <select id="yieldCrop" class="border rounded-lg p-3 w-full focus:ring-2 focus:ring-green-500">
+            <option value="">Select crop...</option>
+          </select>
+        </div>
+        
+        <div>
+          <label class="block text-gray-700 font-medium mb-2">Location (District, State)</label>
+          <input type="text" id="yieldLocation" placeholder="e.g., Bolpur, West Bengal" class="border rounded-lg p-3 w-full focus:ring-2 focus:ring-green-500">
+        </div>
+        
+        <div>
+          <label class="block text-gray-700 font-medium mb-2">Soil Type</label>
+          <select id="yieldSoil" class="border rounded-lg p-3 w-full focus:ring-2 focus:ring-green-500">
+            <option value="loamy">Loamy</option>
+            <option value="sandy">Sandy</option>
+            <option value="clay">Clay</option>
+            <option value="black">Black</option>
+            <option value="red">Red</option>
+            <option value="laterite">Laterite</option>
+          </select>
+        </div>
+        
+        <button type="submit" class="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 w-full font-semibold transition-colors">
+          📊 Predict Yield
+        </button>
+      </form>
+      
+      <div id="yieldResult" class="mt-6 hidden"></div>
+    </div>
+
+    <!-- Crop Recommendation Tab -->
+    <div id="recommendation" class="tab-content hidden bg-white rounded-lg shadow-lg p-8">
+      <h2 class="text-3xl font-bold mb-4 text-gray-800">Get Crop Recommendations</h2>
+      <p class="mb-6 text-gray-600">Find the best crops for your location and conditions.</p>
+      
+      <form id="recommendationForm" class="space-y-4">
+        <div>
+          <label class="block text-gray-700 font-medium mb-2">Location (District, State)</label>
+          <input type="text" id="recLocation" placeholder="e.g., Jaipur, Rajasthan" class="border rounded-lg p-3 w-full focus:ring-2 focus:ring-green-500">
+        </div>
+        
+        <div>
+          <label class="block text-gray-700 font-medium mb-2">Soil Type</label>
+          <select id="recSoil" class="border rounded-lg p-3 w-full focus:ring-2 focus:ring-green-500">
+            <option value="loamy">Loamy</option>
+            <option value="sandy">Sandy</option>
+            <option value="clay">Clay</option>
+            <option value="black">Black</option>
+            <option value="red">Red</option>
+            <option value="laterite">Laterite</option>
+          </select>
+        </div>
+        
+        <div>
+          <label class="block text-gray-700 font-medium mb-2">Season</label>
+          <select id="recSeason" class="border rounded-lg p-3 w-full focus:ring-2 focus:ring-green-500">
+            <option value="kharif">Kharif (Monsoon - Jun-Sep)</option>
+            <option value="rabi">Rabi (Winter - Oct-Mar)</option>
+            <option value="zaid">Zaid (Summer - Mar-Jun)</option>
+          </select>
+        </div>
+        
+        <button type="submit" class="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 w-full font-semibold transition-colors">
+          🌱 Get Recommendations
+        </button>
+      </form>
+      
+      <div id="recommendationResult" class="mt-6 hidden"></div>
+    </div>
+
+    <!-- Farm Report Tab -->
+    <div id="farm" class="tab-content hidden bg-white rounded-lg shadow-lg p-8">
+      <h2 class="text-3xl font-bold mb-4 text-gray-800">Generate Farm Report</h2>
+      <p class="mb-6 text-gray-600">Get a comprehensive AI-driven report for long-term planning.</p>
+      
+      <form id="farmForm" class="space-y-4">
+        <div>
+          <label class="block text-gray-700 font-medium mb-2">Location (District, State)</label>
+          <input type="text" id="farmLocation" placeholder="e.g., Pune, Maharashtra" class="border rounded-lg p-3 w-full focus:ring-2 focus:ring-green-500">
+        </div>
+        
+        <div>
+          <label class="block text-gray-700 font-medium mb-2">Farm Information</label>
+          <textarea id="farmInfo" placeholder="Farm size, current crops, etc..." class="border rounded-lg p-3 w-full h-24 focus:ring-2 focus:ring-green-500"></textarea>
+        </div>
+        
+        <div>
+          <label class="block text-gray-700 font-medium mb-2">Seasonal Data</label>
+          <textarea id="farmSeasonal" placeholder="Past yields, observations..." class="border rounded-lg p-3 w-full h-24 focus:ring-2 focus:ring-green-500"></textarea>
+        </div>
+        
+        <div>
+          <label class="block text-gray-700 font-medium mb-2">Report Language</label>
+          <select id="farmLanguage" class="border rounded-lg p-3 w-full focus:ring-2 focus:ring-green-500">
+            <option value="English">English</option>
+            <option value="Hindi">हिंदी (Hindi)</option>
+            <option value="Bengali">বাংলা (Bengali)</option>
+          </select>
+        </div>
+        
+        <button type="submit" class="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 w-full font-semibold transition-colors">
+          📄 Generate Report
+        </button>
+      </form>
+      
+      <div id="farmResult" class="mt-6 hidden"></div>
+    </div>
+
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    // Load crops on page load
+    fetch('/api/crops')
+      .then(res => res.json())
+      .then(data => {
+        const select = document.getElementById('yieldCrop');
+        data.crops.forEach(crop => {
+          const option = document.createElement('option');
+          option.value = crop;
+          option.textContent = crop.charAt(0).toUpperCase() + crop.slice(1);
+          select.appendChild(option);
+        });
+      });
+
+    // Tab switching
+    function showTab(tabId, btnElement) {
+      document.querySelectorAll(".tab-content").forEach(tab => tab.classList.add("hidden"));
+      document.getElementById(tabId).classList.remove("hidden");
+
+      document.querySelectorAll(".tab-btn").forEach(btn => {
+        btn.classList.remove("border-green-600");
+        btn.classList.add("border-transparent");
+      });
+
+      btnElement.classList.remove("border-transparent");
+      btnElement.classList.add("border-green-600");
+    }
+
+    // File upload preview
+    document.getElementById('fileUpload').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          document.getElementById('previewImg').src = e.target.result;
+          document.getElementById('imagePreview').classList.remove('hidden');
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // Disease diagnosis form
+    document.getElementById('diseaseForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+      
+      const response = await fetch('/disease-diagnosis', {
+        method: 'POST',
+        body: formData
+      });
+      
+      const result = await response.json();
+      
+      if (response.ok) {
+        document.getElementById('diseaseResult').innerHTML = `
+          <div class="bg-green-50 border border-green-200 rounded-lg p-6">
+            <h3 class="text-xl font-bold text-green-800 mb-2">✅ Analysis Complete</h3>
+            <p><strong>Disease:</strong> ${result.disease}</p>
+            <p><strong>Confidence:</strong> ${(result.confidence * 100).toFixed(1)}%</p>
+            <p><strong>Remedy:</strong> ${result.remedy}</p>
+            <img src="${result.image_url}" class="mt-4 rounded-lg max-w-md" />
+          </div>
+        `;
+        document.getElementById('diseaseResult').classList.remove('hidden');
+      } else {
+        alert('Error: ' + result.error);
+      }
+    });
+
+    // Yield prediction form
+    document.getElementById('yieldForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const data = {
+        crop: document.getElementById('yieldCrop').value,
+        location: document.getElementById('yieldLocation').value,
+        soil_type: document.getElementById('yieldSoil').value
+      };
+      
+      const response = await fetch('/yield-prediction', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+      });
+      
+      const result = await response.json();
+      
+      if (response.ok) {
+        document.getElementById('yieldResult').innerHTML = `
+          <div class="bg-blue-50 border border-blue-200 rounded-lg p-6">
+            <h3 class="text-xl font-bold text-blue-800 mb-2">📊 Yield Prediction</h3>
+            <p class="text-2xl font-bold text-blue-900 my-3">${result.predicted_yield_per_hectare} ${result.unit}/hectare</p>
+            <p><strong>Crop:</strong> ${result.crop}</p>
+            <p><strong>Stress Level:</strong> ${(result.rainfall_stress * 100).toFixed(0)}%</p>
+            <div class="mt-4">
+              <strong>Recommendations:</strong>
+              <ul class="list-disc list-inside mt-2">
+                ${result.recommendations.map(r => `<li>${r}</li>`).join('')}
+              </ul>
+            </div>
+          </div>
+        `;
+        document.getElementById('yieldResult').classList.remove('hidden');
+      } else {
+        alert('Error: ' + result.error);
+      }
+    });
+
+    // Crop recommendation form
+    document.getElementById('recommendationForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const data = {
+        location: document.getElementById('recLocation').value,
+        soil_type: document.getElementById('recSoil').value,
+        season: document.getElementById('recSeason').value
+      };
+      
+      const response = await fetch('/crop-recommendation', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+      });
+      
+      const result = await response.json();
+      
+      if (response.ok) {
+        const html = result.map((item, idx) => `
+          <div class="bg-gradient-to-r from-green-50 to-blue-50 border border-green-200 rounded-lg p-4 mb-3">
+            <h4 class="text-lg font-bold text-green-800">${idx + 1}. ${item.crop.toUpperCase()}</h4>
+            <p><strong>Suitability Score:</strong> ${(item.suitability_score * 100).toFixed(1)}%</p>
+            <p class="text-sm text-gray-600 mt-2">Avg Rainfall: ${item.requirements.rainfall_avg.toFixed(1)}mm</p>
+          </div>
+        `).join('');
+        
+        document.getElementById('recommendationResult').innerHTML = `
+          <div>
+            <h3 class="text-xl font-bold text-gray-800 mb-4">🌱 Recommended Crops</h3>
+            ${html}
+          </div>
+        `;
+        document.getElementById('recommendationResult').classList.remove('hidden');
+      } else {
+        alert('Error: ' + result.error);
+      }
+    });
+
+    // Farm report form
+    document.getElementById('farmForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const data = {
+        location: document.getElementById('farmLocation').value,
+        farm_info: document.getElementById('farmInfo').value,
+        seasonal_data: document.getElementById('farmSeasonal').value,
+        language: document.getElementById('farmLanguage').value
+      };
+      
+      const response = await fetch('/farm-report', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+      });
+      
+      const result = await response.json();
+      
+      if (response.ok) {
+        const crops = result.recommended_crops.map(c => c.crop).join(', ');
+        
+        document.getElementById('farmResult').innerHTML = `
+          <div class="bg-gradient-to-br from-green-50 to-yellow-50 border border-green-300 rounded-lg p-6">
+            <h3 class="text-2xl font-bold text-green-800 mb-4">📊 Comprehensive Farm Report</h3>
+            
+            <div class="mb-4">
+              <h4 class="font-bold text-lg">📍 Location Analysis</h4>
+              <p><strong>District:</strong> ${result.location_analysis.district}</p>
+              <p><strong>State:</strong> ${result.location_analysis.state}</p>
+              <p><strong>Annual Rainfall:</strong> ${result.location_analysis.annual_rainfall}mm</p>
+            </div>
+            
+            <div class="mb-4">
+              <h4 class="font-bold text-lg">🌾 Recommended Crops</h4>
+              <p>${crops}</p>
+            </div>
+            
+            <div class="mb-4">
+              <h4 class="font-bold text-lg">💧 Irrigation Advice</h4>
+              <p><strong>Category:</strong> ${result.irrigation_advice.category}</p>
+              <p>${result.irrigation_advice.advice}</p>
+            </div>
+            
+            <div class="mb-4">
+              <h4 class="font-bold text-lg">🌱 Soil Management</h4>
+              <p>${result.soil_management.organic_matter}</p>
+            </div>
+          </div>
+        `;
+        document.getElementById('farmResult').classList.remove('hidden');
+      } else {
+        alert('Error: ' + result.error);
+      }
+    });
+
+    // Initialize first tab
+    window.onload = () => {
+      document.querySelector(".tab-btn").click();
+    };
+  </script>
+
+</body>
+</html>

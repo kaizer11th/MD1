@@ -1,0 +1,102 @@
+/* CropSenseAI Custom Styles */
+
+:root {
+    --primary-green: #16a34a;
+    --dark-green: #15803d;
+    --light-green: #f0fdf4;
+    --accent-blue: #3b82f6;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.tab-btn {
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.tab-btn:hover {
+    background-color: var(--light-green);
+}
+
+.tab-btn.active {
+    color: var(--primary-green);
+    font-weight: 600;
+}
+
+/* File upload animation */
+.upload-area {
+    transition: all 0.3s ease;
+}
+
+.upload-area:hover {
+    border-color: var(--primary-green);
+    background-color: var(--light-green);
+}
+
+/* Loading spinner */
+.spinner {
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid var(--primary-green);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Result cards */
+.result-card {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Crop recommendation badges */
+.crop-badge {
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    font-weight: 600;
+    margin: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Progress bars */
+.progress-bar {
+    height: 8px;
+    background-color: #e5e7eb;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary-green), var(--accent-blue));
+    transition: width 0.3s ease;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .tab-btn {
+        font-size: 0.875rem;
+        padding: 8px 12px;
+    }
+}
