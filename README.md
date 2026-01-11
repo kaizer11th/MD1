@@ -1,2 +1,5 @@
 # MD1
-dd
+
+Crop Sense Detect LM Model. 
+
+Made with the help of Numpy, Python, Css, Java, Js etc. 
